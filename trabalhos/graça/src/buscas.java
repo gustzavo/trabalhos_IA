@@ -88,16 +88,21 @@ public class buscas {
         return true;
     }
 
-    public void blind_search_depth(int max_depth){ 
+    public ArrayList blind_search_depth(int max_depth,boolean show_results){ 
         boolean[] achei = {false};
         ArrayList historico = new ArrayList<>();
         ArrayList caminho = new ArrayList<>();
         blind_search_depth_second(puzzle_game,"",achei,historico,max_depth,caminho);
         if(achei[0]==true){
-            System.out.println("Achei resultado!.");
-            for(int i = 0; i < caminho.size();i++)System.out.println(caminho.get(i));
+            if(show_results){
+                System.out.println("Achei resultado!.");
+                for(int i = 0; i < caminho.size();i++)System.out.println(caminho.get(i));
+            }
+            return caminho;
         }else{
+            if(show_results)
             System.out.println("não encontrei.");
+            return null;
         }
         
     }
@@ -213,6 +218,20 @@ public class buscas {
             return true;
         }
         return false;
+    }
+
+    public boolean aprofundamento_iterativo(int max){  // só por controle mesmo
+        for(int i = 1 ; i < max+1; i ++){
+            ArrayList resultado = blind_search_depth(i,false);
+            if(resultado != null){
+                System.out.println("Encontrei resultado!!.");
+                for(int a = 0; a < resultado.size(); a++) System.out.println(resultado.get(a));
+                return true;
+            }
+        }
+        System.out.println("não Encontrei resultado.");
+        return false;
+
     }
     
 }
