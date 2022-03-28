@@ -231,7 +231,36 @@ public class buscas {
         }
         System.out.println("não Encontrei resultado.");
         return false;
+    }
 
+    public boolean breadth_search(){
+        if(ganhei(puz.get_actual_state())) {
+            //ja veio resolvido
+            System.out.println("ja esta resolvido");
+            return true;
+        }
+        int index_result = -1;
+        ArrayList<puzzle> fila = new ArrayList<>();
+        fila.add(puz);
+        while(index_result == -1){
+            puzzle actual_state = fila.get(0);
+            String[][] state = actual_state.get_actual_state();
+            String[] movimentos = actual_state.aonde_mover(state);
+            for(int i = 0 ; i < movimentos.length; i++){
+                puzzle novo = new puzzle();
+                novo.set_actual_state(actual_state.get_actual_state());
+                novo.movimentos = (ArrayList<String>) actual_state.movimentos.clone();
+                novo.movimenta(movimentos[i], true);
+                if(ganhei(novo.get_actual_state())){
+                    index_result = fila.size()-1;
+                }
+                fila.add(novo);
+            }
+            fila.remove(0);
+        }
+        ArrayList resultado = fila.get(index_result).movimentos;
+        for(int i = 0 ; i < resultado.size(); i++) System.out.println(resultado.get(i));
+        return true;
     }
     
 }
