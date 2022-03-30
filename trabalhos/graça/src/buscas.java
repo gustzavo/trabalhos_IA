@@ -172,18 +172,18 @@ public class buscas {
 
     private boolean stAr_rec(boolean[] achei,puzzle game,ArrayList<puzzle> movimentos,ArrayList<String>[] resultado) {
         achei[0] = ganhei(game.get_actual_state());
-        if(achei[0]==false){
-            String[][] matriz = game.get_actual_state();
+        if(achei[0]==false){ // WTF BRO
+            String[][] matriz = game.get_actual_state(); // WTF BRO kkk
             //-----------------------------------------caso eu ainda não tenha achado. entao vou listar os possiveis movimentos
             String[] movimentos_possiveis = puz.aonde_mover(matriz);
             //----------------------------------------- pegar meu score atual
             int actual_score = puz.avalia(matriz); 
             //----------------------------------------- analisar cada moviemento possivel e seu caso de peso e acresentar a lista de possiveis movimentos.
-            puzzle[] next_move = new puzzle[1];
+            puzzle[] next_move = new puzzle[1]; // WTF BRO kkk
             for(int i = 0 ; i < movimentos_possiveis.length ; i++){
                 next_move[0] = new puzzle();
                 next_move[0].set_actual_state(game.get_actual_state());
-                next_move[0].movimentos = (ArrayList<String>) game.movimentos.clone();
+                next_move[0].movimentos = (ArrayList<String>) game.movimentos.clone(); // WTF BRO
                 next_move[0].movimenta(movimentos_possiveis[i], true);
                 int ajuda = next_move[0].avalia(next_move[0].get_actual_state());
                 next_move[0].cumulative_score+=actual_score + (ajuda - actual_score ); // total + (diferença[x-y])
@@ -208,10 +208,6 @@ public class buscas {
             puzzle v = movimentos.get(indice_next);
             movimentos.remove(indice_next);
             stAr_rec(achei,v,movimentos,resultado);
-            
-
-
-
             //-----------------------------------------
         }else{
             resultado[0] = (ArrayList<String>) game.movimentos.clone();
@@ -220,6 +216,7 @@ public class buscas {
         return false;
     }
 
+<<<<<<< HEAD
     public boolean aprofundamento_iterativo(int max){  // só por controle mesmo
         for(int i = 1 ; i < max+1; i ++){
             ArrayList resultado = blind_search_depth(i,false);
@@ -261,6 +258,44 @@ public class buscas {
         ArrayList resultado = fila.get(index_result).movimentos;
         for(int i = 0 ; i < resultado.size(); i++) System.out.println(resultado.get(i));
         return true;
+=======
+    public void IDAstar(int max_depth){
+        String[] movimentos_possiveis = this.puz.aonde_mover(this.puz.get_actual_state());
+        puzzle next_move;
+        int pesoMinimo;
+        String movimentoRealizado;
+        int contadorMovimentos = 0;
+        while ((! ganhei(this.puz.get_actual_state())) && (max_depth > contadorMovimentos)){
+            movimentoRealizado = "";
+            pesoMinimo=-1;
+            for (String movimento : movimentos_possiveis){
+                next_move = new puzzle();
+                next_move.set_actual_state(this.puz.get_actual_state());
+                next_move.movimentos = (ArrayList<String>) this.puz.movimentos.clone();
+                next_move.movimenta(movimento,true);
+                int ajuda = next_move.avalia(next_move.get_actual_state());
+                next_move.cumulative_score+=puz.avalia(this.puz.get_actual_state())+(ajuda-puz.avalia(this.puz.get_actual_state()));
+                if (-1 == pesoMinimo) {
+                    pesoMinimo = next_move.cumulative_score;
+                    movimentoRealizado = movimento;
+                }else if(pesoMinimo > next_move.cumulative_score){
+                    pesoMinimo = next_move.cumulative_score;
+                    movimentoRealizado = movimento;
+                }
+            }
+            this.puz.movimenta(movimentoRealizado,true);
+            contadorMovimentos++;
+        }
+        if ((contadorMovimentos > max_depth) && (! ganhei(this.puz.get_actual_state()))){
+            System.out.println("Erro, não foi possível encontrar uma solução para o puzzle com menos de " + max_depth + " movimentos.");
+            return;
+        }
+        System.out.println("Encontrada solução em " + contadorMovimentos + " movimentos.");
+        System.out.println("Movimentos a serem realizados:");
+        for (String movimento : this.puz.movimentos){
+            System.out.println(movimento);
+        }
+>>>>>>> 49a5efb (desenvolvido método de busca Interative Depth A* (IDA*))
     }
     
 }
