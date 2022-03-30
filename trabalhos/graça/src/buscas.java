@@ -216,7 +216,6 @@ public class buscas {
         return false;
     }
 
-<<<<<<< HEAD
     public boolean aprofundamento_iterativo(int max){  // só por controle mesmo
         for(int i = 1 ; i < max+1; i ++){
             ArrayList resultado = blind_search_depth(i,false);
@@ -258,7 +257,8 @@ public class buscas {
         ArrayList resultado = fila.get(index_result).movimentos;
         for(int i = 0 ; i < resultado.size(); i++) System.out.println(resultado.get(i));
         return true;
-=======
+    }
+
     public void IDAstar(int max_depth){
         String[] movimentos_possiveis = this.puz.aonde_mover(this.puz.get_actual_state());
         puzzle next_move;
@@ -295,7 +295,6 @@ public class buscas {
         for (String movimento : this.puz.movimentos){
             System.out.println(movimento);
         }
->>>>>>> 49a5efb (desenvolvido método de busca Interative Depth A* (IDA*))
     }
     
 }
