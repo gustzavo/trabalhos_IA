@@ -1,6 +1,6 @@
 public class puzzleincorreto extends Exception{
-    public String getMessage(){
-        return "inconsistência nos dados";
+    public puzzleincorreto(String msg){
+        super(msg);
     }
     
 }
