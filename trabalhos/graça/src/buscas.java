@@ -260,33 +260,14 @@ public class buscas {
     }
 
     public void IDAstar(int max_depth){
-        String[] movimentos_possiveis = this.puz.aonde_mover(this.puz.get_actual_state());
-        puzzle next_move;
-        int pesoMinimo;
-        String movimentoRealizado;
         int contadorMovimentos = 0;
         while ((! ganhei(this.puz.get_actual_state())) && (max_depth > contadorMovimentos)){
-            movimentoRealizado = "";
-            pesoMinimo=-1;
-            for (String movimento : movimentos_possiveis){
-                next_move = new puzzle();
-                next_move.set_actual_state(this.puz.get_actual_state());
-                next_move.movimentos = (ArrayList<String>) this.puz.movimentos.clone();
-                next_move.movimenta(movimento,true);
-                int ajuda = next_move.avalia(next_move.get_actual_state());
-                next_move.cumulative_score+=puz.avalia(this.puz.get_actual_state())+(ajuda-puz.avalia(this.puz.get_actual_state()));
-                if (-1 == pesoMinimo) {
-                    pesoMinimo = next_move.cumulative_score;
-                    movimentoRealizado = movimento;
-                }else if(pesoMinimo > next_move.cumulative_score){
-                    pesoMinimo = next_move.cumulative_score;
-                    movimentoRealizado = movimento;
-                }
-            }
-            this.puz.movimenta(movimentoRealizado,true);
+            this.puz.best_move();
             contadorMovimentos++;
+            System.out.println("Movimento realizado");
+            this.puz.show(this.puz.get_actual_state());
         }
-        if ((contadorMovimentos > max_depth) && (! ganhei(this.puz.get_actual_state()))){
+        if (! ganhei(this.puz.get_actual_state())){
             System.out.println("Erro, não foi possível encontrar uma solução para o puzzle com menos de " + max_depth + " movimentos.");
             return;
         }

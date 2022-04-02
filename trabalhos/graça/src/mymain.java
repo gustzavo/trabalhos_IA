@@ -11,8 +11,8 @@ public class mymain {
         //busca.blind_search_depth(19,true);//n<20 se não demora muito....resulta em: não resolver todos os problemas, mas a maioria!.
         //busca.stAr();
         //busca.aprofundamento_iterativo(20);
-        busca.breadth_search();
-        busca.IDAstar(20);
+        //busca.breadth_search();
+        busca.IDAstar(10);
     }
 
 

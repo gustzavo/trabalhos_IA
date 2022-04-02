@@ -160,4 +160,40 @@ public class puzzle{
         this.actual_state =state;
     }
 
+    public void best_move(){
+        puzzle next_move;
+        int pesoMinimo = -1;
+        String movimentoRealizado="";
+        for (String movimento : this.movimentos){
+            System.out.println("calculando qual o melhor movimento...");
+            next_move = new puzzle();
+            next_move.set_actual_state(this.get_actual_state());
+            next_move.movimentos = (ArrayList<String>) this.movimentos.clone();
+            next_move.movimenta(movimento,true);
+
+            if (-1 == pesoMinimo) {
+                pesoMinimo = next_move.cumulative_score;
+                movimentoRealizado = movimento;
+            }else if(pesoMinimo < next_move.avalia2()){
+                pesoMinimo = next_move.cumulative_score;
+                movimentoRealizado = movimento;
+            }
+            this.movimenta(movimentoRealizado,true);
+        }
+    }
+
+    public int avalia2(){
+        int peso = 0;
+        for(int i = 0 ; i < 3 ; i++){
+            for(int j = 0 ; j < 3; j++){
+                peso+= (this.actual_state[i][j] == this.objetivo[i][i]) ? 1 : 0;
+            }
+        }
+        puzzle filho = new puzzle();
+        filho.set_actual_state(this.get_actual_state());
+        filho.best_move();
+        peso += (filho.avalia(filho.get_actual_state())*2);
+        return peso;
+    }
+
 }
